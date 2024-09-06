@@ -1,0 +1,1382 @@
+@prefix tc: <http://tems.org/2024/temscore#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+
+@prefix skos: <http://www.w3.org/2004/02/skos/core#> .
+@prefix time: <http://www.w3.org/2006/time#> .
+    
+
+<http://tems.org/2024/temscore#> rdf:type owl:Ontology ;
+    rdfs:label "TEMSCore Ontology"@en ;
+    rdfs:comment "An ontology for the Trusted European Media Data Space"@en ;
+    owl:versionInfo "0.1"@en ;
+    owl:creator "TEMS T2.3"@en .
+
+
+# ---------------------------------------------------------------------------
+# SKOS Role Definitions (For Contributors) : TO BE COMPLETED
+# ---------------------------------------------------------------------------
+
+# Define a SKOS Concept Scheme for Roles related to Contributors
+tc:ContributorRoleScheme a skos:ConceptScheme ;
+    rdfs:label "Contributor Role Scheme" ;
+    skos:prefLabel "Roles in Media Content Creation" ;
+    skos:definition "A scheme for defining roles in the creation of media content." .
+
+# Define Core Roles for Contributors as SKOS Concepts
+tc:Director a skos:Concept ;
+    skos:inScheme tc:ContributorRoleScheme ;
+    skos:prefLabel "Director"@en ;
+    skos:definition "The role of directing a media production."@en .
+
+tc:Writer a skos:Concept ;
+    skos:inScheme tc:ContributorRoleScheme ;
+    skos:prefLabel "Writer"@en ;
+    skos:definition "The role of writing scripts, articles, or other content."@en .
+
+tc:Producer a skos:Concept ;
+    skos:inScheme tc:ContributorRoleScheme ;
+    skos:prefLabel "Producer"@en ;
+    skos:definition "The role of overseeing the production of media content."@en .
+
+tc:Screenwriter a skos:Concept ;
+    skos:inScheme tc:ContributorRoleScheme ;
+    skos:prefLabel "Screenwriter"@en ;
+    skos:definition "The role of writing the screenplay for a film or television show."@en ;
+    skos:broader tc:Writer .
+
+
+# ---------------------------------------------------------------------------
+# SKOS Concept Scheme for ProductionJob Roles
+# ---------------------------------------------------------------------------
+
+# Define a SKOS Concept Scheme for Roles related to ProductionJob
+tc:ProductionJobRoleScheme a skos:ConceptScheme ;
+    rdfs:label "Production Job Role Scheme" ;
+    skos:prefLabel "Roles in Media Production" ;
+    skos:definition "A scheme for defining roles in the production of media content." .
+
+# Define Core Roles for ProductionJob as SKOS Concepts
+tc:Producer a skos:Concept ;
+    skos:inScheme tc:ProductionJobRoleScheme ;
+    skos:prefLabel "Producer"@en ;
+    skos:definition "The role of overseeing the production of media content."@en .
+
+tc:Editor a skos:Concept ;
+    skos:inScheme tc:ProductionJobRoleScheme ;
+    skos:prefLabel "Editor"@en ;
+    skos:definition "The role of editing media content for final production."@en .
+
+tc:CameraOperator a skos:Concept ;
+    skos:inScheme tc:ProductionJobRoleScheme ;
+    skos:prefLabel "Camera Operator"@en ;
+    skos:definition "The role of operating cameras during media production."@en .
+
+
+
+# ---------------------------------------------------------------------------
+# Class Definitions
+# ---------------------------------------------------------------------------
+
+# Define the base class MediaContent
+tc:MediaContent a owl:Class ;
+    rdfs:label "Media Content" ;
+    rdfs:comment "Represents any type of media content, such as articles, videos, podcasts." .
+
+# Define the MediaInstance class
+tc:MediaInstance a owl:Class ;
+    rdfs:label "Media Instance" ;
+    rdfs:comment "Represents a specific version or physical representation of a media content, such as a file with certain properties or formats." .
+
+# Define the OrderedSegment class
+tc:OrderedSegment a owl:Class ;
+    rdfs:label "Ordered Segment" ;
+    rdfs:comment "Represents a segment of media content that is part of an ordered collection." .
+
+# Subclass: Article
+tc:Article a owl:Class ;
+    rdfs:subClassOf tc:MediaContent;
+    rdfs:label "Article" ;
+    rdfs:comment "Represents a written article or text-based content. An article may contain other media segments." .
+
+# Subclass: Video
+tc:Video a owl:Class ;
+    rdfs:subClassOf tc:MediaContent;
+    rdfs:label "Video" ;
+    rdfs:comment "Represents video content, such as movies, clips, or documentaries. A video can be a standalone media content or part of another media content." .
+
+# Subclass: Image
+tc:Image a owl:Class ;
+    rdfs:subClassOf tc:MediaContent;
+    rdfs:label "Image" ;
+    rdfs:comment "Represents an image that can be a standalone media content or part of another media content." .
+
+# Subclass: Audio
+tc:Audio a owl:Class ;
+    rdfs:subClassOf tc:MediaContent;
+    rdfs:label "Audio" ;
+    rdfs:comment "Represents audio content, such as podcasts, music, or radio broadcasts. Audio can be a standalone media content or part of another media content." .
+
+# Subclass: Dataset
+tc:Dataset a owl:Class ;
+    rdfs:subClassOf tc:MediaContent;
+    rdfs:label "Dataset" ;
+    rdfs:comment "Represents structured data or datasets, such as CSV files, databases, or statistical data. A dataset can be part of another media content." .
+
+# Subclass: 3DObject
+tc:3DObject a owl:Class ;
+    rdfs:subClassOf tc:MediaContent;
+    rdfs:label "3D Object" ;
+    rdfs:comment "Represents 3D models or objects, such as CAD files, VR content, or digital sculptures. A 3D object can be part of another media content." .
+
+tc:Event a owl:Class ;
+    rdfs:label "Event" ;
+    rdfs:comment "Represents a significant occurrence or happening related to media content, publications." .
+
+tc:ContentDescription a owl:Class ;
+    rdfs:label "Content Description" ;
+    rdfs:comment "Handles the overall description of content, including intrinsic properties and agent-dependent descriptions." .
+
+tc:Descriptor a owl:Class ;
+    rdfs:label "Descriptor" ;
+    rdfs:comment "Represents a specific descriptive activity performed by an agent, such as generating embeddings or writing a summary." .
+
+tc:Chapter a owl:Class ;
+    rdfs:label "Chapter" ;
+    rdfs:comment "Represents a structured linear segment of the content, with start and stop points." .
+
+tc:ContentGrouping a owl:Class ;
+    rdfs:label "Content Grouping" ;
+    rdfs:comment "Represents a group or category of media content, such as a series or collection." .
+
+tc:Concept a owl:Class ;
+    rdfs:label "Concept" ;
+    rdfs:comment "A tag or category associated with the content." .
+
+# Agent Classes
+tc:Agent a owl:Class ;
+    rdfs:label "Agent" ;
+    rdfs:comment "An entity that performs tasks, such as a person, organization, or digital tool." .
+
+tc:Person a owl:Class ;
+    rdfs:subClassOf tc:Agent ;
+    rdfs:label "Person" ;
+    rdfs:comment "A human individual acting as an agent." .
+
+tc:Organization a owl:Class ;
+    rdfs:subClassOf tc:Agent ;
+    rdfs:label "Organization" ;
+    rdfs:comment "An organized group of people acting as an agent." .
+
+tc:DigitalTool a owl:Class ;
+    rdfs:subClassOf tc:Agent ;
+    rdfs:label "Digital Tool" ;
+    rdfs:comment "A software or digital system acting as an agent." .
+
+# Identifier Class
+tc:Identifier a owl:Class ;
+    rdfs:label "Identifier" ;
+    rdfs:comment "A class representing an identifier along with its provider." .
+
+# Publication Definitions
+tc:Publication a owl:Class ;
+    rdfs:label "Publication" ;
+    rdfs:comment "Represents the publication details of a media content, including access type, monetization model, price, and other related properties." .
+
+# Class for Target Audience
+tc:TargetAudience a owl:Class ;
+    rdfs:label "Target Audience" ;
+    rdfs:comment "Represents the target audience for the content, including socio-demographic data and segments." .
+
+# Provenance Class
+tc:Provenance a owl:Class ;
+    rdfs:label "Provenance" ;
+    rdfs:comment "Represents the history, origin, and modification details of the media content." .
+
+# Rights Class
+tc:Rights a owl:Class ;
+    rdfs:label "Rights" ;
+    rdfs:comment "Covers legal and usage rights associated with the media content." .
+
+# Define the Roles Class (For Contributors)
+tc:Role a owl:Class ;
+    rdfs:label "Role" ;
+    rdfs:comment "Represents the roles that an agent can perform specifically in the creation of media content." .
+
+# Define the Contributors Class
+tc:Contributors a owl:Class ;
+    rdfs:label "Contributors" ;
+    rdfs:comment "Represents the collection of agents involved in the creation of media content." .
+
+# Define the Consumption Class
+tc:Consumption a owl:Class ;
+    rdfs:label "Consumption" ;
+    rdfs:comment "Describes the consumption of media content, focusing on aggregate metrics and audience data." .
+
+# Base TechnicalMetadata class
+tc:TechnicalMetadata a owl:Class ;
+    rdfs:label "Technical Metadata" ;
+    rdfs:comment "Represents the technical properties of media content." .
+
+# Subclass: VideoTechnicalMetadata
+tc:VideoTechnicalMetadata a owl:Class ;
+    rdfs:subClassOf tc:TechnicalMetadata ;
+    rdfs:label "Video Technical Metadata" ;
+    rdfs:comment "Represents the technical properties specific to video content." .
+
+# Subclass: AudioTechnicalMetadata
+tc:AudioTechnicalMetadata a owl:Class ;
+    rdfs:subClassOf tc:TechnicalMetadata ;
+    rdfs:label "Audio Technical Metadata" ;
+    rdfs:comment "Represents the technical properties specific to audio content." .
+
+# Subclass: ImageTechnicalMetadata
+tc:ImageTechnicalMetadata a owl:Class ;
+    rdfs:subClassOf tc:TechnicalMetadata ;
+    rdfs:label "Image Technical Metadata" ;
+    rdfs:comment "Represents the technical properties specific to image content." .
+
+# Subclass: 3DObjectTechnicalMetadata
+tc:3DModelTechnicalMetadata a owl:Class ;
+    rdfs:subClassOf tc:TechnicalMetadata ;
+    rdfs:label "3D Object Technical Metadata" ;
+    rdfs:comment "Represents the technical properties specific to 3D model content." .
+
+# Location Class
+tc:Location a owl:Class ;
+    rdfs:label "Location" ;
+    rdfs:comment "Represents the geographic location associated with media content, agents, or events." .
+
+# Define the MediaEvaluation class
+tc:MediaEvaluation a owl:Class ;
+    rdfs:label "Media Evaluation" ;
+    rdfs:comment "Represents the evaluation of media content, specifically for fact-checking and assessing misinformation." .
+
+tc:ProductionJob a owl:Class ;
+    rdfs:label "Production Job" ;
+    rdfs:comment "Represents a job or task performed to generate media content or its instances." .
+
+
+# ---------------------------------------------------------------------------
+# Object Properties
+# ---------------------------------------------------------------------------
+
+# Object Property: Link MediaInstance to MediaContent
+tc:isInstanceOf a owl:ObjectProperty ;
+    rdfs:label "is instance of" ;
+    rdfs:comment "Links a MediaInstance to the MediaContent it represents." ;
+    rdfs:domain tc:MediaInstance ;
+    rdfs:range tc:MediaContent .
+
+# Inverse Property: Links MediaContent to MediaInstance
+tc:hasInstance a owl:ObjectProperty ;
+    rdfs:label "has instance" ;
+    rdfs:comment "Indicates that a MediaContent has a specific MediaInstance." ;
+    rdfs:domain tc:MediaContent ;
+    rdfs:range tc:MediaInstance .
+
+# Declare the inverse relationship
+tc:isInstanceOf owl:inverseOf tc:hasInstance .
+
+# Object Property: hasOrderedSegment linking MediaContent to OrderedSegment
+tc:hasOrderedSegment a owl:ObjectProperty ;
+    rdfs:label "has ordered segment" ;
+    rdfs:comment "Links MediaContent to its ordered segments." ;
+    rdfs:domain tc:MediaContent ;
+    rdfs:range tc:OrderedSegment .
+
+# Object Property: hasSegment linking OrderedSegment to MediaContent
+tc:hasSegment a owl:ObjectProperty ;
+    rdfs:label "has segment" ;
+    rdfs:comment "Links an OrderedSegment to a specific media content segment (e.g., video, audio, etc.)." ;
+    rdfs:domain tc:OrderedSegment ;
+    rdfs:range tc:MediaContent .
+
+# Object Property: isSegmentOf as inverse of hasSegment
+tc:isSegmentOf a owl:ObjectProperty ;
+    rdfs:label "is segment of" ;
+    rdfs:comment "Indicates that a MediaContent is part of an OrderedSegment." ;
+    rdfs:domain tc:MediaContent ;
+    rdfs:range tc:OrderedSegment .
+
+# Declare the inverse relationship between hasSegment and isSegmentOf
+tc:hasSegment owl:inverseOf tc:isSegmentOf .
+
+# Property linking MediaContent to ContentDescription
+tc:hasDescription a owl:ObjectProperty ;
+    rdfs:label "has description" ;
+    rdfs:comment "Links media content to its content description." ;
+    rdfs:domain tc:MediaContent ;
+    rdfs:range tc:ContentDescription .
+
+# Inverse Property linking ContentDescription to MediaContent
+tc:isDescriptionOf a owl:ObjectProperty ;
+    rdfs:label "is description of" ;
+    rdfs:comment "Indicates that a content description is associated with the media content it describes." ;
+    rdfs:domain tc:ContentDescription ;
+    rdfs:range tc:MediaContent .
+
+# Declare the inverse relationship
+tc:hasDescription owl:inverseOf tc:isDescriptionOf .
+
+# Object Property: hasEvent linking entities to Event
+tc:hasEvent a owl:ObjectProperty ;
+    rdfs:label "has event" ;
+    rdfs:comment "Links an entity, such as media content or publication, to an event." ;
+    rdfs:domain owl:Thing ;  # Applied to any class, can be refined for specific classes
+    rdfs:range tc:Event .
+
+# Inverse Object Property: isEventFor linking Event to entities
+tc:isEventFor a owl:ObjectProperty ;
+    rdfs:label "is event for" ;
+    rdfs:comment "Indicates that an event is associated with a specific entity, such as media content or publication." ;
+    rdfs:domain tc:Event ;
+    rdfs:range owl:Thing .
+
+# Declare the inverse relationship between hasEvent and isEventFor
+tc:hasEvent owl:inverseOf tc:isEventFor .
+
+# MentionsPerson (linking MediaContent to a Person)
+tc:mentionsPerson a owl:ObjectProperty ;
+    rdfs:label "Mentions Person" ;
+    rdfs:comment "Links media content to a person mentioned in the content." ;
+    rdfs:domain tc:MediaContent ;
+    rdfs:range tc:Person .
+
+# Property linking ContentDescription to Descriptor
+tc:hasDescriptor a owl:ObjectProperty ;
+    rdfs:label "has descriptor" ;
+    rdfs:comment "Links a content description to one or more descriptors for agent-dependent fields." ;
+    rdfs:domain tc:ContentDescription ;
+    rdfs:range tc:Descriptor .
+
+# Inverse Property linking Descriptor to ContentDescription
+tc:isDescriptorOf a owl:ObjectProperty ;
+    rdfs:label "is descriptor of" ;
+    rdfs:comment "Indicates that a descriptor is part of or belongs to a specific content description." ;
+    rdfs:domain tc:Descriptor ;
+    rdfs:range tc:ContentDescription .
+
+# Declare the inverse relationship
+tc:hasDescriptor owl:inverseOf tc:isDescriptorOf .
+
+tc:hasChapter a owl:ObjectProperty ;
+    rdfs:label "has chapter" ;
+    rdfs:comment "Links a content description or descriptor to one or more chapters." ;
+    rdfs:domain tc:ContentDescription ;
+    rdfs:range tc:Chapter .
+
+# Property linking Descriptor to Agent
+tc:isDescribedBy a owl:ObjectProperty ;
+    rdfs:label "is described by" ;
+    rdfs:comment "Links a descriptor to the agent who performed the description." ;
+    rdfs:domain tc:Descriptor ;
+    rdfs:range tc:Agent .
+
+# Inverse Property linking Agent to Descriptor
+tc:performsDescription a owl:ObjectProperty ;
+    rdfs:label "performs description" ;
+    rdfs:comment "Indicates that an agent performs the creation of the descriptor." ;
+    rdfs:domain tc:Agent ;
+    rdfs:range tc:Descriptor .
+
+# Declare the inverse relationship
+tc:isDescribedBy owl:inverseOf tc:performsDescription .
+
+
+# Object Property linking MediaContent to ContentGrouping
+tc:hasGrouping a owl:ObjectProperty ;
+    rdfs:label "Has Grouping" ;
+    rdfs:comment "Associates media content with a content grouping that categorizes or organizes it." ;
+    rdfs:domain tc:MediaContent ;
+    rdfs:range tc:ContentGrouping .
+
+# Inverse Property linking ContentGrouping to MediaContent
+tc:isGroupingOf a owl:ObjectProperty ;
+    rdfs:label "Is Grouping Of" ;
+    rdfs:comment "Indicates that the content grouping categorizes or organizes specific media content." ;
+    rdfs:domain tc:ContentGrouping ;
+    rdfs:range tc:MediaContent .
+
+# Declare the inverse relationship
+tc:hasGrouping owl:inverseOf tc:isGroupingOf .
+
+# Relationships Involving Concepts
+tc:hasConcept a owl:ObjectProperty ;
+    rdfs:label "has concept" ;
+    rdfs:comment "Associates the content with tags or categories." ;
+    rdfs:domain tc:ContentDescription ;
+    rdfs:range tc:Concept .
+
+# Relationships Involving Agents
+
+# Object Property: Links an entity to its identifier
+tc:hasIdentifier a owl:ObjectProperty ;
+    rdfs:label "has identifier" ;
+    rdfs:comment "Links an entity to its identifier." ;
+    rdfs:range tc:Identifier .
+
+# Inverse Property: Links an identifier to the entity it identifies
+tc:isIdentifierOf a owl:ObjectProperty ;
+    rdfs:label "is identifier of" ;
+    rdfs:comment "Indicates that an identifier is associated with a specific entity." ;
+    rdfs:domain tc:Identifier ;
+    rdfs:range owl:Thing .
+
+# Declare the inverse relationship between hasIdentifier and isIdentifierOf
+tc:hasIdentifier owl:inverseOf tc:isIdentifierOf .
+
+# Object Property linking Publication to Agent (Publisher)
+tc:hasPublisher a owl:ObjectProperty ;
+    rdfs:label "Has Publisher" ;
+    rdfs:comment "Links a publication to its publisher." ;
+    rdfs:domain tc:Publication ;
+    rdfs:range tc:Agent .
+
+# Inverse Property linking Agent to Publication
+tc:isPublisherOf a owl:ObjectProperty ;
+    rdfs:label "Is Publisher Of" ;
+    rdfs:comment "Indicates that the agent is the publisher of a specific publication." ;
+    rdfs:domain tc:Agent ;
+    rdfs:range tc:Publication .
+
+# Declare the inverse relationship
+tc:hasPublisher owl:inverseOf tc:isPublisherOf .
+
+# Object Property linking MediaContent to Publication
+tc:hasPublication a owl:ObjectProperty ;
+    rdfs:label "Has Publication" ;
+    rdfs:comment "Links media content to its publication details." ;
+    rdfs:domain tc:MediaContent ;
+    rdfs:range tc:Publication .
+
+# Inverse Property linking Publication to MediaContent
+tc:isPublicationOf a owl:ObjectProperty ;
+    rdfs:label "Is Publication Of" ;
+    rdfs:comment "Indicates that the publication is associated with specific media content." ;
+    rdfs:domain tc:Publication ;
+    rdfs:range tc:MediaContent .
+
+# Declare the inverse relationship
+# Declare the inverse relationship
+tc:isPublicationOf owl:inverseOf tc:hasPublication .
+
+# Object Property linking Publication to TargetAudience
+tc:hasTargetAudience a owl:ObjectProperty ;
+    rdfs:label "Has Target Audience" ;
+    rdfs:comment "Links the publication to its target audience." ;
+    rdfs:domain tc:MediaContent ;
+    rdfs:range tc:TargetAudience .
+
+# Inverse Property linking TargetAudience to Publication
+tc:isTargetAudienceFor a owl:ObjectProperty ;
+    rdfs:label "Is Target Audience For" ;
+    rdfs:comment "Indicates that the target audience is the intended audience for specific publications." ;
+    rdfs:domain tc:TargetAudience ;
+    rdfs:range tc:MediaContent .
+
+# Declare the inverse relationship
+tc:hasTargetAudience owl:inverseOf tc:isTargetAudienceFor .
+
+# Object Property linking MediaContent to Rights
+tc:hasRights a owl:ObjectProperty ;
+    rdfs:label "Has Rights" ;
+    rdfs:comment "Links media content to its rights information." ;
+    rdfs:domain tc:MediaContent ;
+    rdfs:range tc:Rights .
+
+# Inverse Property linking Rights to MediaContent
+tc:isRightsOf a owl:ObjectProperty ;
+    rdfs:label "Is Rights Of" ;
+    rdfs:comment "Indicates that the rights are associated with specific media content." ;
+    rdfs:domain tc:Rights ;
+    rdfs:range tc:MediaContent .
+
+# Declare the inverse relationship
+tc:hasRights owl:inverseOf tc:isRightsOf .
+
+# Object Property linking Rights to Agent
+tc:isHeldBy a owl:ObjectProperty ;
+    rdfs:label "Is Held By" ;
+    rdfs:comment "Indicates that the rights are held by a specific agent." ;
+    rdfs:domain tc:Rights ;
+    rdfs:range tc:Agent .
+
+# Inverse Property linking Agent to Rights
+tc:holdsRightsFor a owl:ObjectProperty ;
+    rdfs:label "Holds Rights For" ;
+    rdfs:comment "Indicates that an agent holds the rights for specific content." ;
+    rdfs:domain tc:Agent ;
+    rdfs:range tc:Rights .
+
+# Declare the inverse relationship
+tc:isHeldBy owl:inverseOf tc:holdsRightsFor .
+
+# Generic Object Property: hasContributor
+tc:hasContributor a owl:ObjectProperty ;
+    rdfs:label "has contributor" ;
+    rdfs:comment "Links an entity to its contributors." ;
+    rdfs:domain owl:Thing ;
+    rdfs:range tc:Agent .
+
+# Inverse Property for hasContributor (applies automatically to subproperties)
+tc:isContributorOf a owl:ObjectProperty ;
+    rdfs:label "is contributor of" ;
+    rdfs:comment "Indicates that an agent is a contributor of an entity." ;
+    rdfs:domain tc:Agent ;
+    rdfs:range owl:Thing .
+
+# Declaring the inverse relationship
+tc:hasContributor owl:inverseOf tc:isContributorOf .
+
+# Specific Object Property for MediaContent
+tc:hasContentContributor a owl:ObjectProperty ;
+    rdfs:label "has content contributor" ;
+    rdfs:comment "Links media content to contributors responsible for its creation." ;
+    rdfs:subPropertyOf tc:hasContributor ;
+    rdfs:domain tc:MediaContent ;
+    rdfs:range tc:Contributors .
+
+# Link Contributors to Roles (within the context of Creation)
+tc:hasRole a owl:ObjectProperty ;
+    rdfs:label "has role" ;
+    rdfs:comment "Links a Contributor to a role they perform in the creation of media content." ;
+    rdfs:domain tc:Contributors ;
+    rdfs:range tc:Role .
+
+# Property linking Role to Agent
+tc:isPerformedBy a owl:ObjectProperty ;
+    rdfs:label "is performed by" ;
+    rdfs:comment "Links a role to the agent who performed it." ;
+    rdfs:domain tc:Role ;
+    rdfs:range tc:Agent .
+
+# Inverse Property linking Agent to Role
+tc:performsRole a owl:ObjectProperty ;
+    rdfs:label "performs role" ;
+    rdfs:comment "Indicates that an agent performs or fulfills a specific role." ;
+    rdfs:domain tc:Agent ;
+    rdfs:range tc:Role .
+
+# Declare the inverse relationship
+tc:isPerformedBy owl:inverseOf tc:performsRole .
+
+tc:rolePeriod a owl:ObjectProperty ;
+    rdfs:label "Role Period" ;
+    rdfs:comment "Specifies the time period during which the agent performed the role." ;
+    rdfs:domain tc:Role ;
+    rdfs:range time:TemporalEntity .
+
+# Links Consumption to MediaContent
+tc:consumptionFor a owl:ObjectProperty ;
+    rdfs:label "consumption for" ;
+    rdfs:comment "Links the consumption data to the media content that was consumed." ;
+    rdfs:domain tc:Consumption ;
+    rdfs:range tc:MediaContent .
+
+# Reciprocal Property linking MediaContent to its Consumption
+tc:hasConsumption a owl:ObjectProperty ;
+    rdfs:label "has consumption" ;
+    rdfs:comment "Links media content to the consumption events associated with it." ;
+    rdfs:domain tc:MediaContent ;
+    rdfs:range tc:Consumption .
+
+# Declare the inverse relationship => should be aplied to other inverse relations
+tc:consumptionFor owl:inverseOf tc:hasConsumption .
+
+# Links Consumption to Publication
+
+# Object Property: isBasedOnPublication
+tc:isBasedOnPublication a owl:ObjectProperty ;
+    rdfs:label "is based on publication" ;
+    rdfs:comment "Links the consumption of media content to the publication it is based on." ;
+    rdfs:domain tc:Consumption ;
+    rdfs:range tc:Publication .
+
+# Inverse Property: isPublicationOfConsumption
+tc:isPublicationOfConsumption a owl:ObjectProperty ;
+    rdfs:label "is publication of consumption" ;
+    rdfs:comment "Indicates that a publication is associated with specific consumption data." ;
+    rdfs:domain tc:Publication ;
+    rdfs:range tc:Consumption .
+
+# Object Property: Link MediaInstance to TechnicalMetadata
+tc:hasTechnicalMetadata a owl:ObjectProperty ;
+    rdfs:label "has technical metadata" ;
+    rdfs:comment "Links the MediaInstance to its specific technical metadata." ;
+    rdfs:domain tc:MediaInstance ;
+    rdfs:range tc:TechnicalMetadata .
+
+# Object Property: Inverse of hasTechnicalMetadata
+tc:isTechnicalMetadataFor a owl:ObjectProperty ;
+    rdfs:label "is technical metadata for" ;
+    rdfs:comment "Links technical metadata to the media content it describes." ;
+    rdfs:domain tc:TechnicalMetadata ;
+    rdfs:range tc:MediaInstance .
+
+# Declare the inverse relationship between hasTechnicalMetadata and isTechnicalMetadataFor
+tc:hasTechnicalMetadata owl:inverseOf tc:isTechnicalMetadataFor .
+
+# Specific Relationships of hasTechnicalMetadata
+
+# Linking Video with its Technical Metadata
+tc:hasVideoTechnicalMetadata a owl:ObjectProperty ;
+    rdfs:label "has video technical metadata" ;
+    rdfs:comment "Links video content to its specific technical metadata." ;
+    rdfs:domain tc:MediaInstance ;
+    rdfs:range tc:VideoTechnicalMetadata .
+
+tc:isVideoTechnicalMetadataFor a owl:ObjectProperty ;
+    rdfs:label "is video technical metadata for" ;
+    rdfs:comment "Links video technical metadata to the video content it describes." ;
+    rdfs:domain tc:VideoTechnicalMetadata ;
+    rdfs:range tc:MediaInstance .
+
+tc:hasVideoTechnicalMetadata owl:inverseOf tc:isVideoTechnicalMetadataFor .
+
+# Linking Audio with its Technical Metadata
+tc:hasAudioTechnicalMetadata a owl:ObjectProperty ;
+    rdfs:label "has audio technical metadata" ;
+    rdfs:comment "Links audio content to its specific technical metadata." ;
+    rdfs:domain tc:MediaInstance ;
+    rdfs:range tc:AudioTechnicalMetadata .
+
+tc:isAudioTechnicalMetadataFor a owl:ObjectProperty ;
+    rdfs:label "is audio technical metadata for" ;
+    rdfs:comment "Links audio technical metadata to the audio content it describes." ;
+    rdfs:domain tc:AudioTechnicalMetadata ;
+    rdfs:range tc:MediaInstance .
+
+tc:hasAudioTechnicalMetadata owl:inverseOf tc:isAudioTechnicalMetadataFor .
+
+# Linking Image with its Technical Metadata
+tc:hasImageTechnicalMetadata a owl:ObjectProperty ;
+    rdfs:label "has image technical metadata" ;
+    rdfs:comment "Links image content to its specific technical metadata." ;
+    rdfs:domain tc:MediaInstance ;
+    rdfs:range tc:ImageTechnicalMetadata .
+
+tc:isImageTechnicalMetadataFor a owl:ObjectProperty ;
+    rdfs:label "is image technical metadata for" ;
+    rdfs:comment "Links image technical metadata to the image content it describes." ;
+    rdfs:domain tc:ImageTechnicalMetadata ;
+    rdfs:range tc:MediaInstance .
+
+tc:hasImageTechnicalMetadata owl:inverseOf tc:isImageTechnicalMetadataFor .
+
+# Linking 3D Model with its Technical Metadata
+tc:has3DModelTechnicalMetadata a owl:ObjectProperty ;
+    rdfs:label "has 3D model technical metadata" ;
+    rdfs:comment "Links 3D model content to its specific technical metadata." ;
+    rdfs:domain tc:MediaInstance ;
+    rdfs:range tc:3DModelTechnicalMetadata .
+
+tc:is3DModelTechnicalMetadataFor a owl:ObjectProperty ;
+    rdfs:label "is 3D model technical metadata for" ;
+    rdfs:comment "Links 3D model technical metadata to the 3D model content it describes." ;
+    rdfs:domain tc:3DModelTechnicalMetadata ;
+    rdfs:range tc:MediaInstance .
+
+tc:has3DModelTechnicalMetadata owl:inverseOf tc:is3DModelTechnicalMetadataFor .
+
+
+# Object Property: hasLocation linking any class to Location
+tc:hasLocation a owl:ObjectProperty ;
+    rdfs:label "has location" ;
+    rdfs:comment "Links an entity, such as media content or an agent, to its geographic location." ;
+    rdfs:domain owl:Thing ;
+    rdfs:range tc:Location .
+
+# Property linking MediaEvaluation to MediaContent
+tc:evaluatesMediaContent a owl:ObjectProperty ;
+    rdfs:label "evaluates media content" ;
+    rdfs:comment "Links the evaluation to the specific media content being evaluated." ;
+    rdfs:domain tc:MediaEvaluation ;
+    rdfs:range tc:MediaContent .
+
+# Property linking MediaEvaluation to Keywords
+tc:hasKeyword a owl:ObjectProperty ;
+    rdfs:label "has keyword" ;
+    rdfs:comment "Links the media evaluation to relevant keywords for fact-checking and disinformation." ;
+    rdfs:domain tc:MediaEvaluation ;
+    rdfs:range rdfs:Literal .
+
+# Property linking MediaEvaluation to Contributors (Agents)
+tc:hasEvaluationContributor a owl:ObjectProperty ;
+    rdfs:label "has evaluation contributor" ;
+    rdfs:comment "Links media evaluation to contributors involved in fact-checking." ;
+    rdfs:subPropertyOf tc:hasContributor ;
+    rdfs:domain tc:MediaEvaluation ;
+    rdfs:range tc:Agent .
+
+# Property linking MediaEvaluation to Source
+tc:hasSource a owl:ObjectProperty ;
+    rdfs:label "has source" ;
+    rdfs:comment "Links the media evaluation to its source, such as AFP or other fact-checking entities." ;
+    rdfs:domain tc:MediaEvaluation ;
+    rdfs:range tc:Source .
+
+# Property linking MediaEvaluation to Evaluation Date
+tc:evaluationDate a owl:DatatypeProperty ;
+    rdfs:label "Evaluation Date" ;
+    rdfs:comment "The date when the media content was evaluated for accuracy." ;
+    rdfs:domain tc:MediaEvaluation ;
+    rdfs:range xsd:dateTime .
+
+# Property linking MediaEvaluation to Headline
+tc:hasHeadline a owl:DatatypeProperty ;
+    rdfs:label "Headline" ;
+    rdfs:comment "The headline associated with the media evaluation." ;
+    rdfs:domain tc:MediaEvaluation ;
+    rdfs:range xsd:string .
+
+
+# Property linking MediaEvaluation to Status
+tc:hasEvaluationStatus a owl:DatatypeProperty ;
+    rdfs:label "Evaluation Status" ;
+    rdfs:comment "The current status of the media evaluation, such as Usable or Pending." ;
+    rdfs:domain tc:MediaEvaluation ;
+    rdfs:range xsd:string .
+
+# Property linking MediaEvaluation to Keywords
+tc:hasEvaluationKeyword a owl:DatatypeProperty ;
+    rdfs:label "Evaluation Keyword" ;
+    rdfs:comment "Keywords related to disinformation and misinformation." ;
+    rdfs:domain tc:MediaEvaluation ;
+    rdfs:range rdfs:Literal .
+    
+# Object Property: Links a ProductionJob to MediaContent
+tc:producesMediaContent a owl:ObjectProperty ;
+    rdfs:label "produces media content" ;
+    rdfs:comment "Indicates that the ProductionJob is responsible for generating media content." ;
+    rdfs:domain tc:ProductionJob ;
+    rdfs:range tc:MediaContent .
+
+# Object Property: Links a ProductionJob to MediaInstance
+tc:producesMediaInstance a owl:ObjectProperty ;
+    rdfs:label "produces media instance" ;
+    rdfs:comment "Indicates that the ProductionJob results in the creation of a MediaInstance." ;
+    rdfs:domain tc:ProductionJob ;
+    rdfs:range tc:MediaInstance .
+
+# Object Property: Links ProductionJob to Contributor (Contributors Class)
+tc:hasProductionJobContributor a owl:ObjectProperty ;
+    rdfs:label "has production job contributor" ;
+    rdfs:comment "Links the ProductionJob to a contributor involved in the production, along with their role." ;
+    rdfs:domain tc:ProductionJob ;
+    rdfs:range tc:Contributors .
+
+# Object Property: Links ProductionJob to Event
+tc:hasProductionEvent a owl:ObjectProperty ;
+    rdfs:label "has production event" ;
+    rdfs:comment "Links the ProductionJob to a related event in the production process." ;
+    rdfs:domain tc:ProductionJob ;
+    rdfs:range tc:Event .
+
+# Object Property: Links ProductionJob to ProductionDevice
+tc:usesProductionDevice a owl:ObjectProperty ;
+    rdfs:label "uses production device" ;
+    rdfs:comment "Links the ProductionJob to a device or tool used during the production process." ;
+    rdfs:domain tc:ProductionJob ;
+    rdfs:range tc:ProductionDevice .
+
+
+# ---------------------------------------------------------------------------
+# Datatype Properties
+# ---------------------------------------------------------------------------
+
+# Data Properties for the MediaInstance Class
+
+# Data Property: URI or Source Location of the Media Instance
+tc:sourceURI a owl:DatatypeProperty ;
+    rdfs:label "Source/Location URI" ;
+    rdfs:comment "The URI or source location of the MediaInstance, such as a file URL or storage location." ;
+    rdfs:domain tc:MediaInstance ;
+    rdfs:range xsd:anyURI .
+
+# Data Property: Version of the Media Instance
+tc:version a owl:DatatypeProperty ;
+    rdfs:label "Version" ;
+    rdfs:comment "Represents the version of the media instance, useful for tracking revisions or formats." ;
+    rdfs:domain tc:MediaInstance ;
+    rdfs:range xsd:string .
+
+# Data Property: Checksum or Hash of the Media Instance
+tc:checksum a owl:DatatypeProperty ;
+    rdfs:label "Checksum" ;
+    rdfs:comment "A checksum or hash value used to verify the integrity of the media instance." ;
+    rdfs:domain tc:MediaInstance ;
+    rdfs:range xsd:string .
+
+# Data Property: Description of the Media Instance
+tc:description a owl:DatatypeProperty ;
+    rdfs:label "Instance Description" ;
+    rdfs:comment "A description of the media instance, such as its purpose or additional contextual information." ;
+    rdfs:domain tc:MediaInstance ;
+    rdfs:range rdfs:Literal .
+
+
+# Data Properties for the Event Class
+# Data Property: Start Date of the Event
+tc:startDate a owl:DatatypeProperty ;
+    rdfs:label "Start Date" ;
+    rdfs:comment "The date when the event starts." ;
+    rdfs:domain tc:Event ;
+    rdfs:range xsd:dateTime .
+
+# Data Property: End Date of the Event
+tc:endDate a owl:DatatypeProperty ;
+    rdfs:label "End Date" ;
+    rdfs:comment "The date when the event ends." ;
+    rdfs:domain tc:Event ;
+    rdfs:range xsd:dateTime .
+
+# Data Property: Event Name
+tc:eventName a owl:DatatypeProperty ;
+    rdfs:label "Event Name" ;
+    rdfs:comment "The name of the event." ;
+    rdfs:domain tc:Event ;
+    rdfs:range xsd:string .
+
+# Data Property: Event Description
+tc:eventDescription a owl:DatatypeProperty ;
+    rdfs:label "Event Description" ;
+    rdfs:comment "A brief description of the event." ;
+    rdfs:domain tc:Event ;
+    rdfs:range rdfs:Literal .
+
+# Object Property: Event Type (linked to a SKOS Concept)
+tc:hasEventType a owl:ObjectProperty ;
+    rdfs:label "has event type" ;
+    rdfs:comment "Links the event to a SKOS concept representing its type or category (e.g., political, social, entertainment)." ;
+    rdfs:domain tc:Event ;
+    rdfs:range skos:Concept .  # Event types can be managed as SKOS concepts
+
+# Object Property: Links Event to its Organizer (Agent)
+tc:hasEventOrganizer a owl:ObjectProperty ;
+    rdfs:label "Has Event Organizer" ;
+    rdfs:comment "Links an event to the agent (person, organization, or tool) responsible for organizing it." ;
+    rdfs:domain tc:Event ;
+    rdfs:range tc:Agent .
+
+# Data property to represent the order of segments within an OrderedSegment
+tc:order a owl:DatatypeProperty ;
+    rdfs:label "Order" ;
+    rdfs:comment "Defines the order of a segment within the ordered collection." ;
+    rdfs:domain tc:OrderedSegment ;
+    rdfs:range xsd:integer .
+
+tc:segmentType a owl:DatatypeProperty ;
+    rdfs:label "Segment Type" ;
+    rdfs:comment "Specifies the type of the ordered segment." ;
+    rdfs:domain tc:OrderedSegment ;
+    rdfs:range rdfs:Literal .
+
+tc:segmentDescription a owl:DatatypeProperty ;
+    rdfs:label "Segment Description" ;
+    rdfs:comment "A description of the ordered segment." ;
+    rdfs:domain tc:OrderedSegment ;
+    rdfs:range rdfs:Literal .
+
+# Datatype Properties for ContentDescription
+
+tc:hasMediaTopic a owl:ObjectProperty ;
+    rdfs:label "Has Media Topic" ;
+    rdfs:comment "Links media content to IPTC Media Topics for classification." ;
+    rdfs:domain tc:ContentDescription ;
+    rdfs:range skos:Concept .
+
+tc:totalLinks a owl:DatatypeProperty ;
+    rdfs:label "Total Links" ;
+    rdfs:comment "Stores the total number of hyperlinks or references in the media content." ;
+    rdfs:domain tc:ContentDescription ;
+    rdfs:range xsd:integer .
+
+tc:rating a owl:DatatypeProperty ;
+    rdfs:label "Rating" ;
+    rdfs:comment "The rating of the content." ;
+    rdfs:domain tc:ContentDescription ;
+    rdfs:range xsd:decimal .
+
+tc:keywords a owl:DatatypeProperty ;
+    rdfs:label "Keywords" ;
+    rdfs:comment "Keywords associated with the content." ;
+    rdfs:domain tc:ContentDescription ;
+    rdfs:range rdfs:Literal .
+
+tc:genre a owl:DatatypeProperty ;
+    rdfs:label "Genre" ;
+    rdfs:comment "The genre of the content." ;
+    rdfs:domain tc:ContentDescription ;
+    rdfs:range rdfs:Literal .
+
+# Property linking ContentDescription to Summary
+tc:hasSummary a owl:DatatypeProperty ;
+    rdfs:label "Summary" ;
+    rdfs:comment "A summary of the media content." ;
+    rdfs:domain tc:ContentDescription ;
+    rdfs:range rdfs:Literal .
+
+# Datatype Properties for Chapter
+tc:chapterStart a owl:DatatypeProperty ;
+    rdfs:label "Chapter Start" ;
+    rdfs:comment "The start point of the chapter, which could be a timestamp for video or a page number for text." ;
+    rdfs:domain tc:Chapter ;
+    rdfs:range rdfs:Literal .
+
+tc:chapterStop a owl:DatatypeProperty ;
+    rdfs:label "Chapter Stop" ;
+    rdfs:comment "The stop point of the chapter, which could be a timestamp for video or a page number for text." ;
+    rdfs:domain tc:Chapter ;
+    rdfs:range rdfs:Literal .
+
+tc:chapterTitle a owl:DatatypeProperty ;
+    rdfs:label "Chapter Title" ;
+    rdfs:comment "The title of the chapter." ;
+    rdfs:domain tc:Chapter ;
+    rdfs:range rdfs:Literal .
+
+tc:descriptionPurpose a owl:DatatypeProperty ;
+    rdfs:label "Description Purpose" ;
+    rdfs:comment "Definition of the purpose of the description." ;
+    rdfs:domain tc:Descriptor ;
+    rdfs:range rdfs:Literal .
+
+tc:embeddings a owl:DatatypeProperty ;
+    rdfs:label "Embeddings" ;
+    rdfs:comment "A sequence of floating-point numbers representing the embeddings or vector representations of the content. The list's types will be validated via SHACL." ;
+    rdfs:domain tc:Descriptor ;
+    rdfs:range rdf:List .
+
+tc:descriptionText a owl:DatatypeProperty ;
+    rdfs:label "Description Text" ;
+    rdfs:comment "A textual description provided by the descriptor agent." ;
+    rdfs:domain tc:Descriptor ;
+    rdfs:range rdfs:Literal .
+
+# Media Content data properties
+
+
+# MediaContent Subject
+tc:subject a owl:DatatypeProperty ;
+    rdfs:label "Subject" ;
+    rdfs:comment "Represents the subject of the media content." ;
+    rdfs:domain tc:MediaContent ;
+    rdfs:range xsd:string .
+
+# Translated Languages in MediaContent
+tc:translatedLanguages a owl:DatatypeProperty ;
+    rdfs:label "Translated Languages" ;
+    rdfs:comment "Represents the list of languages into which the media content is available, which differ from the original language." ;
+    rdfs:domain tc:MediaContent ;
+    rdfs:range rdf:List .
+
+# Urgency in MediaContent
+tc:urgency a owl:DatatypeProperty ;
+    rdfs:label "Urgency" ;
+    rdfs:comment "Represents the urgency level of media content." ;
+    rdfs:domain tc:MediaContent ;
+    rdfs:range xsd:integer .
+
+tc:title a owl:DatatypeProperty ;
+    rdfs:label "Title" ;
+    rdfs:comment "The title of the content in different languages." ;
+    rdfs:domain tc:MediaContent ;
+    rdfs:range rdfs:Literal .
+
+tc:subtitle a owl:DatatypeProperty ;
+    rdfs:label "Subtitle" ;
+    rdfs:comment "The subtitle of the content in different languages." ;
+    rdfs:domain tc:MediaContent ;
+    rdfs:range rdfs:Literal .
+
+tc:commentStatus a owl:DatatypeProperty ;
+    rdfs:label "Comment Status" ;
+    rdfs:comment "Indicates whether comments are allowed (open) or not (closed)." ;
+    rdfs:domain tc:MediaContent ;
+    rdfs:range xsd:string .
+
+tc:locator a owl:DatatypeProperty ; 
+    rdfs:label "Content URI" ;
+    rdfs:comment "URI/URL linking to the content in different languages." ;
+    rdfs:domain tc:MediaContent ;
+    rdfs:range xsd:anyURI .
+
+tc:originalLanguages a owl:DatatypeProperty ;
+    rdfs:label "Original Languages" ;
+    rdfs:comment "Indicates the original language(s) of the content." ;
+    rdfs:domain tc:MediaContent ;
+    rdfs:range rdfs:Literal .
+
+# Datatype Properties for ContentGrouping
+
+
+tc:groupingType a owl:DatatypeProperty ;
+    rdfs:label "Grouping Type" ;
+    rdfs:comment "The type of content grouping (e.g., show)." ;
+    rdfs:domain tc:ContentGrouping ;
+    rdfs:range xsd:string .
+
+tc:groupingTitle a owl:DatatypeProperty ;
+    rdfs:label "Grouping Title" ;
+    rdfs:comment "The title of the content grouping in different languages." ;
+    rdfs:domain tc:ContentGrouping ;
+    rdfs:range rdfs:Literal .
+
+tc:groupingDescription a owl:DatatypeProperty ;
+    rdfs:label "Grouping Description" ;
+    rdfs:comment "The description of the content grouping in different languages." ;
+    rdfs:domain tc:ContentGrouping ;
+    rdfs:range rdfs:Literal .
+
+tc:groupingUrl a owl:DatatypeProperty ;
+    rdfs:label "Grouping URI" ;
+    rdfs:comment "The URI linking to the content grouping." ;
+    rdfs:domain tc:ContentGrouping ;
+    rdfs:range xsd:anyURI .
+
+# Datatype Properties for Concepts
+
+tc:conceptName a owl:DatatypeProperty ;
+    rdfs:label "Concept Name" ;
+    rdfs:comment "The name of the concept in different languages." ;
+    rdfs:domain tc:Concept ;
+    rdfs:range rdfs:Literal .
+
+tc:conceptDescription a owl:DatatypeProperty ;
+    rdfs:label "Concept Description" ;
+    rdfs:comment "The description of the concept." ;
+    rdfs:domain tc:Concept ;
+    rdfs:range xsd:string .
+
+tc:conceptSlug a owl:DatatypeProperty ;
+    rdfs:label "Concept locator" ;
+    rdfs:comment "Slug or web-friendly identifier for the concept." ;
+    rdfs:domain tc:Concept ;
+    rdfs:range xsd:string .
+
+tc:conceptKind a owl:DatatypeProperty ;
+    rdfs:label "Concept Kind" ;
+    rdfs:comment "The kind of the concept." ;
+    rdfs:domain tc:Concept ;
+    rdfs:range xsd:string .
+
+tc:conceptParent a owl:DatatypeProperty ;
+    rdfs:label "Concept Parent" ;
+    rdfs:comment "The parent concept if applicable." ;
+    rdfs:domain tc:Concept ;
+    rdfs:range tc:Concept .
+
+# Datatype Properties for Identifier
+tc:identifierValue a owl:DatatypeProperty ;
+    rdfs:label "Identifier Value" ;
+    rdfs:comment "The alphanumerical ID value." ;
+    rdfs:domain tc:Identifier ;
+    rdfs:range xsd:string .
+
+tc:identifierProvider a owl:DatatypeProperty ;
+    rdfs:label "Identifier Provider" ;
+    rdfs:comment "The provider of the ID, such as ISAN or ISBN." ;
+    rdfs:domain tc:Identifier ;
+    rdfs:range xsd:string .
+
+# Datatype Properties for Publication
+
+tc:channel a owl:DatatypeProperty ;
+    rdfs:label "Channel" ;
+    rdfs:comment "Represents the specific channel or outlet where the media content is distributed, such as a TV channel, social media account, or website section." ;
+    rdfs:domain tc:Publication ;
+    rdfs:range xsd:string .
+
+tc:pubDate a owl:DatatypeProperty ;
+    rdfs:label "Publication Date" ;
+    rdfs:comment "The publication date and time of the content." ;
+    rdfs:domain tc:Publication ;
+    rdfs:range xsd:dateTime .
+
+tc:accessType a owl:DatatypeProperty ;
+    rdfs:label "Access Type" ;
+    rdfs:comment "The access type of the content (e.g., Free, Subscription, PayPerView)." ;
+    rdfs:domain tc:Publication ;
+    rdfs:range xsd:string .
+
+tc:monetizationModel a owl:DatatypeProperty ;
+    rdfs:label "Monetization Model" ;
+    rdfs:comment "The monetization model of the content (e.g., Ad-supported, Subscription-based)." ;
+    rdfs:domain tc:Publication ;
+    rdfs:range xsd:string .
+
+tc:price a owl:DatatypeProperty ;
+    rdfs:label "Price" ;
+    rdfs:comment "The price of the content." ;
+    rdfs:domain tc:Publication ;
+    rdfs:range xsd:decimal .
+
+tc:currency a owl:DatatypeProperty ;
+    rdfs:label "Currency" ;
+    rdfs:comment "The currency in which the price is denominated (e.g., USD, EUR)." ;
+    rdfs:domain tc:Publication ;
+    rdfs:range xsd:string .
+
+tc:ageRestriction a owl:DatatypeProperty ;
+    rdfs:label "Age Restriction" ;
+    rdfs:comment "Indicates the age restriction for the content (e.g., 18+, PG-13)." ;
+    rdfs:domain tc:Publication ;
+    rdfs:range xsd:string .
+
+# Datatype Property for License Information
+tc:license a owl:DatatypeProperty ;
+    rdfs:label "License" ;
+    rdfs:comment "The license under which the content is released." ;
+    rdfs:domain tc:Rights ;
+    rdfs:range rdfs:Literal .  # or xsd:anyURI if you want to link to a specific license document.
+
+# Datatype Property for ODRL Policy ID
+tc:odrlPolicyId a owl:DatatypeProperty ;
+    rdfs:label "ODRL Policy ID" ;
+    rdfs:comment "The IRI of the ODRL policy attached to the media content." ;
+    rdfs:domain tc:Rights ;
+    rdfs:range xsd:anyURI .
+
+# Disclaimer 
+tc:disclaimer a owl:DatatypeProperty ;
+    rdfs:label "Disclaimer" ;
+    rdfs:comment "Represents a legal or usage disclaimer related to the media content." ;
+    rdfs:domain tc:Rights ;
+    rdfs:range xsd:string .
+
+# Provenance Data Properties
+
+# signal 
+tc:signal a owl:DatatypeProperty ;
+    rdfs:label "Signal" ;
+    rdfs:comment "Represents an update or signal of changes to the content." ;
+    rdfs:domain tc:Provenance ;
+    rdfs:range rdfs:Literal .
+
+tc:source a owl:DatatypeProperty ;
+    rdfs:label "Source" ;
+    rdfs:comment "Represents the origin or source of the media content." ;
+    rdfs:domain tc:Provenance ;
+    rdfs:range rdfs:Literal .
+
+
+tc:creationDate a owl:DatatypeProperty ;
+    rdfs:label "Creation Date" ;
+    rdfs:comment "The date and time when the content was created." ;
+    rdfs:domain tc:Provenance ;
+    rdfs:range xsd:dateTime .
+
+tc:modificationDate a owl:DatatypeProperty ;
+    rdfs:label "Modification Date" ;
+    rdfs:comment "The date and time when the content was modified." ;
+    rdfs:domain tc:Provenance ;
+    rdfs:range xsd:dateTime .
+
+tc:versionNumber a owl:DatatypeProperty ;
+    rdfs:label "Version Number" ;
+    rdfs:comment "The version number of the content." ;
+    rdfs:domain tc:Provenance ;
+    rdfs:range xsd:string .
+
+tc:versionDescription a owl:DatatypeProperty ;
+    rdfs:label "Version Description" ;
+    rdfs:comment "A description of the version of the content." ;
+    rdfs:domain tc:Provenance ;
+    rdfs:range rdfs:Literal .
+
+# Property linking Provenance to the original MediaContent
+tc:isProvenanceFor a owl:ObjectProperty ;
+    rdfs:label "Is Provenance For" ;
+    rdfs:comment "Indicates that this provenance information is relevant for one or more media content items." ;
+    rdfs:domain tc:Provenance ;
+    rdfs:range tc:MediaContent .
+
+# Inverse Property linking MediaContent to its Provenance
+tc:hasProvenance a owl:ObjectProperty ;
+    rdfs:label "Has Provenance" ;
+    rdfs:comment "Links media content to its provenance details." ;
+    rdfs:domain tc:MediaContent ;
+    rdfs:range tc:Provenance .
+
+# Declare the inverse relationship
+tc:isProvenanceFor owl:inverseOf tc:hasProvenance .
+
+
+# Datatype Property for C2PA Identifier
+tc:c2paIdentifier a owl:DatatypeProperty ;
+    rdfs:label "C2PA Identifier" ;
+    rdfs:comment "A placeholder for the C2PA digital identifier associated with the media content." ;
+    rdfs:domain tc:Provenance ;
+    rdfs:range xsd:string .
+
+# Role Type Property (for flexibility)
+tc:roleType a owl:DatatypeProperty ;
+    rdfs:label "Role Type" ;
+    rdfs:comment "Specifies the type of role performed in the creation of media content (e.g., Director, Writer)." ;
+    rdfs:domain tc:Role ;
+    rdfs:range xsd:string .
+
+# Role Description Property
+tc:roleDescription a owl:DatatypeProperty ;
+    rdfs:label "Role Description" ;
+    rdfs:comment "Provides additional details about the role performed in content creation." ;
+    rdfs:domain tc:Role ;
+    rdfs:range rdfs:Literal .
+
+# Role SKOS Concept Link (Optional)
+tc:roleConcept a owl:ObjectProperty ;
+    rdfs:label "Role Concept" ;
+    rdfs:comment "Links the role instance to a SKOS concept for standardization." ;
+    rdfs:domain tc:Role ;
+    rdfs:range skos:Concept .
+
+# Total Views
+tc:totalViews a owl:DatatypeProperty ;
+    rdfs:label "Total Views" ;
+    rdfs:comment "The total number of times the media content was viewed." ;
+    rdfs:domain tc:Consumption ;
+    rdfs:range xsd:integer .
+
+# Total Clicks
+tc:totalClicks a owl:DatatypeProperty ;
+    rdfs:label "Total Clicks" ;
+    rdfs:comment "The total number of clicks on the media content." ;
+    rdfs:domain tc:Consumption ;
+    rdfs:range xsd:integer .
+
+tc:completionRate a owl:DatatypeProperty ;
+    rdfs:label "Completion Rate" ;
+    rdfs:comment "The percentage of users who completed the content." ;
+    rdfs:domain tc:Consumption ;
+    rdfs:range xsd:decimal .
+
+# Average Time Spent
+tc:averageTimeSpent a owl:DatatypeProperty ;
+    rdfs:label "Average Time Spent" ;
+    rdfs:comment "The average amount of time spent by users on the media content (in seconds)." ;
+    rdfs:domain tc:Consumption ;
+    rdfs:range xsd:decimal .
+
+tc:engagementRate a owl:DatatypeProperty ;
+    rdfs:label "Engagement Rate" ;
+    rdfs:comment "The rate of user interactions relative to views." ;
+    rdfs:domain tc:Consumption ;
+    rdfs:range xsd:decimal .
+
+# Audience Data
+tc:audienceData a owl:DatatypeProperty ;
+    rdfs:label "Audience Data" ;
+    rdfs:comment "Demographic or segmentation data related to the audience consuming the content." ;
+    rdfs:domain tc:Consumption ;
+    rdfs:range rdfs:Literal .
+
+# Propensity Model
+tc:propensityModel a owl:DatatypeProperty ;
+    rdfs:label "Propensity Model" ;
+    rdfs:comment "A file or URI representing the propensity model used to predict user behavior." ;
+    rdfs:domain tc:Consumption ;
+    rdfs:range xsd:anyURI . # Assuming it's a file path or URI
+
+# General Technical Properties
+tc:fileFormat a owl:DatatypeProperty ;
+    rdfs:label "File Format" ;
+    rdfs:comment "The file format of the media content (e.g., MP4, MP3, JPEG)." ;
+    rdfs:domain tc:TechnicalMetadata ;
+    rdfs:range rdfs:Literal .
+
+tc:fileSize a owl:DatatypeProperty ;
+    rdfs:label "File Size" ;
+    rdfs:comment "The size of the media content file in bytes." ;
+    rdfs:domain tc:TechnicalMetadata ;
+    rdfs:range xsd:integer .
+
+# Video-Specific Technical Properties
+tc:videoCodec a owl:DatatypeProperty ;
+    rdfs:label "Video Codec" ;
+    rdfs:comment "The video codec used to encode the video content (e.g., H.264, VP9)." ;
+    rdfs:domain tc:VideoTechnicalMetadata ;
+    rdfs:range rdfs:Literal .
+
+tc:resolution a owl:DatatypeProperty ;
+    rdfs:label "Resolution" ;
+    rdfs:comment "The resolution of the video content (e.g., 1920x1080)." ;
+    rdfs:domain tc:VideoTechnicalMetadata ;
+    rdfs:range rdfs:Literal .
+
+tc:frameRate a owl:DatatypeProperty ;
+    rdfs:label "Frame Rate" ;
+    rdfs:comment "The frame rate of the video content in frames per second (e.g., 30fps, 60fps)." ;
+    rdfs:domain tc:VideoTechnicalMetadata ;
+    rdfs:range xsd:decimal .
+
+# Audio-Specific Technical Properties
+tc:audioCodec a owl:DatatypeProperty ;
+    rdfs:label "Audio Codec" ;
+    rdfs:comment "The audio codec used to encode the audio content (e.g., AAC, MP3)." ;
+    rdfs:domain tc:AudioTechnicalMetadata ;
+    rdfs:range rdfs:Literal .
+
+tc:bitRate a owl:DatatypeProperty ;
+    rdfs:label "Bit Rate" ;
+    rdfs:comment "The bit rate of the audio content in kilobits per second (e.g., 320kbps)." ;
+    rdfs:domain tc:AudioTechnicalMetadata ;
+    rdfs:range xsd:decimal .
+
+tc:sampleRate a owl:DatatypeProperty ;
+    rdfs:label "Sample Rate" ;
+    rdfs:comment "The sample rate of the audio content in Hertz (e.g., 44100Hz)." ;
+    rdfs:domain tc:AudioTechnicalMetadata ;
+    rdfs:range xsd:integer .
+
+# Image-Specific Technical Properties
+tc:colorDepth a owl:DatatypeProperty ;
+    rdfs:label "Color Depth" ;
+    rdfs:comment "The color depth of the image in bits (e.g., 24-bit, 32-bit)." ;
+    rdfs:domain tc:ImageTechnicalMetadata ;
+    rdfs:range xsd:integer .
+
+tc:dimensions a owl:DatatypeProperty ;
+    rdfs:label "Dimensions" ;
+    rdfs:comment "The dimensions of the image (e.g., 1920x1080 pixels)." ;
+    rdfs:domain tc:ImageTechnicalMetadata ;
+    rdfs:range rdfs:Literal .
+
+# Data property for specifying the country
+tc:country a owl:DatatypeProperty ;
+    rdfs:label "Country" ;
+    rdfs:comment "Specifies the country of the location." ;
+    rdfs:domain tc:Location ;
+    rdfs:range xsd:string .
+
+# Data property for specifying the city
+tc:city a owl:DatatypeProperty ;
+    rdfs:label "City" ;
+    rdfs:comment "Specifies the city of the location." ;
+    rdfs:domain tc:Location ;
+    rdfs:range xsd:string .
+
+# Data property for specifying geographic coordinates (latitude, longitude)
+tc:coordinates a owl:DatatypeProperty ;
+    rdfs:label "Coordinates" ;
+    rdfs:comment "Specifies the geographic coordinates (latitude, longitude) of the location." ;
+    rdfs:domain tc:Location ;
+    rdfs:range xsd:string .
+
+# Data property for specifying region/state
+tc:region a owl:DatatypeProperty ;
+    rdfs:label "Region/State" ;
+    rdfs:comment "Specifies the region or state of the location." ;
+    rdfs:domain tc:Location ;
+    rdfs:range xsd:string .
+
+# Data Property of the ProductionJob
+
+# Data Property: ProductionJob Description
+tc:jobDescription a owl:DatatypeProperty ;
+    rdfs:label "Job Description" ;
+    rdfs:comment "A description of the production job." ;
+    rdfs:domain tc:ProductionJob ;
+    rdfs:range rdfs:Literal .
+    
